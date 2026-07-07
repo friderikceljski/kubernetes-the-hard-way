@@ -8,10 +8,17 @@
       ]
     }
   },
-  "postCreateCommand": "apt-get update && apt-get -y install wget curl vim openssl git",
+  // postCreateCommand runs once when the container is first created.
+  // It installs all prerequisites and downloads/extracts Kubernetes binaries.
+  // If you rebuild the container, this runs again from scratch automatically.
+  "postCreateCommand": "bash .devcontainer/setup.sh",
   "mounts": [
-    "source=${localEnv:HOME}/.kube,target=/root/.kube,type=bind",
-    "source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind"
+    // Mount your host ~/.kube and ~/.ssh so kubectl config and SSH keys
+    // are available inside the container. Uses USERPROFILE (Windows) with
+    // fallback to HOME (Linux/Mac) so this works cross-platform.
+    // Uncomment once those directories exist on your host machine:
+    // "source=${localEnv:USERPROFILE}/.kube,target=/root/.kube,type=bind",
+    // "source=${localEnv:USERPROFILE}/.ssh,target=/root/.ssh,type=bind"
   ],
   "forwardPorts": [6443, 8080],
   "remoteUser": "root"

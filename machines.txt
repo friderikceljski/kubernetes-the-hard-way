@@ -1,0 +1,2 @@
+192.168.1.10 k8s-001.kubernetes.local k8s-001
+192.168.1.11 k8s-002.kubernetes.local k8s-002 10.200.0.0/24
